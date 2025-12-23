@@ -5,7 +5,7 @@ from typing import List, Optional, Tuple
 
 
 class ObjectDetector:
-    """Object detector using KNN background subtraction.
+    """Simple object detector using KNN background subtraction.
     
     Args:
         history: Number of frames for background learning
