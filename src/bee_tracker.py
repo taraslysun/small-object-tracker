@@ -6,7 +6,7 @@ from scipy.optimize import linear_sum_assignment
 
 INPUT_FOLDER = "data/images/bees_medium/blurred_frames"
 DETECTIONS_FILE = "detections.npy"
-OUTPUT_VIDEO = "bee_tracking_result.mp4"
+OUTPUT_VIDEO = "bees_medium_tracking_result.mp4"
 
 MAX_DIST_THRESHOLD = 30.0
 MIN_HITS = 3
