@@ -21,14 +21,12 @@ def prepare_video(path_to_video, output_folder):
     print(f"Video at {path_to_video} is prepared and saved to {output_folder}.")
 
 list_of_data = [
-    # ("./data/videos/ants_hard.mp4", "./data/images/ants_hard"),
-    # ("./data/videos/bees_long.mp4", "./data/images/bees_long"),
+    ("../data/videos/bees_long.mp4", "../data/images/bees_long"),
     # ("./data/videos/bees_medium.mp4", "./data/images/bees_medium"),
-    ("../data/videos/bees_short.mp4", "../data/images/bees_short"),
-    ("../data/videos/bees1_longer.mp4", "../data/images/bees1_longer"),
-    ("../data/videos/bees2_longer.mp4", "../data/images/bees2_longer"),
-    # ("./data/videos/city_longer.mp4", "./data/images/city_longer")
-    ("../data/videos/videoplayback.mp4", "../data/images/videoplayback")
+    # ("../data/videos/bees_short.mp4", "../data/images/bees_short"),
+    # ("../data/videos/bees1_longer.mp4", "../data/images/bees1_longer"),
+    # ("../data/videos/bees2_longer.mp4", "../data/images/bees2_longer"),
+    # ("../data/videos/videoplayback.mp4", "../data/images/videoplayback")
 ]
 
 for pair in list_of_data:

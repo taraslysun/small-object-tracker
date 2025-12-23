@@ -77,7 +77,7 @@ venv.bak/
 # Image sequences / outputs
 *.jpg
 *.jpeg
-*.png
+*.jpg
 *.gif
 *.bmp
 *.tif

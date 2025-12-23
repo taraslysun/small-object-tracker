@@ -93,6 +93,32 @@ class ObjectDetector:
         
         return detections
     
+    def get_foreground_mask(self, frame: np.ndarray, roi_mask: Optional[np.ndarray] = None, 
+                           apply_morphology: bool = True) -> np.ndarray:
+        """Get the foreground mask for a frame.
+        
+        Args:
+            frame: Input frame
+            roi_mask: Optional region of interest mask
+            apply_morphology: Whether to apply morphological operations
+        
+        Returns:
+            Foreground mask (binary image)
+        """
+        if frame is None or frame.size == 0:
+            return np.array([])
+        
+        fg_mask = self.back_sub.apply(frame)
+        
+        if roi_mask is not None:
+            fg_mask = cv2.bitwise_and(fg_mask, roi_mask)
+        
+        if apply_morphology:
+            fg_mask = cv2.morphologyEx(fg_mask, cv2.MORPH_CLOSE, self.kernel_dilate)
+            fg_mask = cv2.morphologyEx(fg_mask, cv2.MORPH_OPEN, self.kernel_erode)
+        
+        return fg_mask
+    
     def reset(self):
         """Reset the background model."""
         self.back_sub = cv2.createBackgroundSubtractorKNN(

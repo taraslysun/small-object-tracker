@@ -6,14 +6,51 @@ Simple, clean modules for object detection and tracking in video sequences.
 
 ```
 src/
+├── sot/               # SOT Pipeline (recommended)
+│   ├── __init__.py
+│   ├── sot.py         # Main SOT class
+│   ├── pipeline.py    # Pipeline architecture
+│   ├── steps.py       # Built-in pipeline steps
+│   └── README.md      # Full documentation
 ├── detector/          # Object detection module
 │   ├── __init__.py
 │   └── detector.py    # ObjectDetector class
 ├── tracker/           # Object tracking module
 │   ├── __init__.py
 │   └── tracker.py     # ObjectTracker and Track classes
-└── demo.ipynb         # Complete demonstration notebook
+├── sot_demo.ipynb     # SOT Pipeline demonstration (recommended)
+└── demo.ipynb         # Basic detection/tracking demo
 ```
+
+## Quick Start
+
+### Option 1: SOT Pipeline (Recommended)
+
+The SOT (Small Object Tracker) provides a flexible pipeline architecture:
+
+```python
+from sot import SOT
+
+# Simple usage
+sot = SOT()
+results = sot.process_video("frames/*.jpg", "output.mp4")
+
+# Custom pipeline
+from sot import OpticalFlowStep, BackgroundSeparationStep
+
+sot = SOT(auto_setup=False)
+sot.add_step(OpticalFlowStep())
+sot.add_step(BackgroundSeparationStep())
+sot.add_detection(history=500, min_area=30)
+sot.add_tracking(max_distance=30)
+sot.add_visualization()
+
+results = sot.process_video("frames/*.jpg", "output.mp4")
+```
+
+**See `sot/README.md` and `sot_demo.ipynb` for complete documentation.**
+
+### Option 2: Direct Module Usage
 
 ## Quick Start
 
@@ -91,7 +128,7 @@ detector = ObjectDetector()
 tracker = ObjectTracker()
 
 # Load frames
-files = sorted(glob.glob("../data/images/*/blurred_frames/*.png"))
+files = sorted(glob.glob("../data/images/*/blurred_frames/*.jpg"))
 
 # Process
 for i, file_path in enumerate(files):
@@ -116,10 +153,42 @@ Install with:
 pip install opencv-python numpy scipy
 ```
 
+## Pipeline Architecture (SOT)
+
+The SOT class provides a modular pipeline where you can:
+
+1. **Use Pre-built Steps**
+   - Detection, tracking, visualization
+   - Optical flow, background separation
+   - Preprocessing, ROI filtering
+
+2. **Create Custom Steps**
+   ```python
+   from sot import PipelineStep
+   
+   class MyStep(PipelineStep):
+       def process(self, frame, context):
+           # Your logic here
+           context['my_result'] = process_frame(frame)
+           return context
+   ```
+
+3. **Build Complex Workflows**
+   - Chain multiple processing steps
+   - Share data through context dictionary
+   - Enable/disable steps dynamically
+
+4. **Extend Easily**
+   - Add RANSAC for static feature detection
+   - Integrate deep learning models
+   - Add custom filters and transformations
+
+
 ## Notes
 
-- Both modules are simple and focused on core functionality
-- Easy to integrate into larger pipelines
+- **SOT pipeline** is recommended for production use
+- Direct modules (`detector`, `tracker`) available for simple cases
+- All modules are simple and focused on core functionality
 - Parameters can be tuned for different use cases
 - Use `reset()` method to process multiple videos
 
